@@ -70,6 +70,15 @@ module TheComments
       render comment_template(:manage)
     end
 
+    def edit_by_author
+      @comment = current_user.comments.find(params[:id])
+      if @comment.update_by_author(params[:comment])
+        render layout: false, partial: comment_partial(:comment_body), locals: { comment: @comment }
+      else
+        render json: { errors: @comment.errors.full_messages }
+      end
+    end
+
     # Methods based on *current_user* helper
     # Methods for admin
     %w[draft published deleted].each do |state|
@@ -104,9 +113,9 @@ module TheComments
     # BASE METHODS
     # Public methods
     def update
-      comment = ::Comment.find(params[:id])
-      comment.update_attributes!(patch_comment_params)
-      render(layout: false, partial: comment_partial(:comment_body), locals: { comment: comment })
+      @comment = ::Comment.find(params[:id])
+      @comment.update_attributes!(patch_comment_params)
+      render(layout: false, partial: comment_partial(:comment_body), locals: { comment: @comment })
     end
 
     def create

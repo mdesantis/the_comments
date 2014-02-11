@@ -28,6 +28,10 @@ module TheComments
       before_save   :prepare_content
     end
 
+    def author
+      user
+    end
+
     def avatar_url
       src = id.to_s
       src = title unless title.blank?
@@ -35,7 +39,7 @@ module TheComments
       hash = Digest::MD5.hexdigest(src)
       "https://2.gravatar.com/avatar/#{hash}?s=42&d=https://identicons.github.com/#{hash}.png"
     end
-      
+
     def mark_as_spam
       count = self_and_descendants.update_all({spam: true})
       update_spam_counter
@@ -81,12 +85,29 @@ module TheComments
       self.content = self.raw_content
     end
 
+    def editable_by_author?
+      author.present? and created_at >= 4.minutes.ago
+    end
+
+    def update_by_author(attributes)
+      if editable_by_author?
+        update_attributes(attributes)
+      else
+        errors.add :base, created_more_than_4_minutes_ago
+        false
+      end
+    end
+
+    def created_more_than_4_minutes_ago
+      'sono passati più di 4 minuti da quando il commento è stato creato'
+    end
+
     # Warn: increment! doesn't call validation =>
     # before_validation filters doesn't work   =>
     # We have few unuseful requests
     # I impressed that I found it and reduce DB requests
     # Awesome logic pazzl! I'm really pedant :D
-    def update_cache_counters    
+    def update_cache_counters
       user.try :recalculate_my_comments_counter!
 
       if holder
