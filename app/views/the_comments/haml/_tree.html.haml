@@ -1,4 +1,6 @@
 .comments#comments
   %ol.comments_tree{ data: { comments: { tolarance_time: TheComments.config.tolerance_time  } } }
     = render partial: 'the_comments/haml/comment', locals: { tree: comments_tree }
-  = render partial: 'the_comments/haml/form', locals: { commentable: commentable }
+
+  - if user_signed_in?
+    = render partial: 'the_comments/haml/form', locals: { commentable: commentable }

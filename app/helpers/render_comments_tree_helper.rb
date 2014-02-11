@@ -8,7 +8,7 @@
 # or use h.html_escape(node.content)
 # for escape potentially dangerous content
 module RenderCommentsTreeHelper
-  module Render 
+  module Render
     class << self
       attr_accessor :h, :options
 
@@ -60,7 +60,7 @@ module RenderCommentsTreeHelper
 
       def published_comment
         "<li>
-          <div id='comment_#{@comment.anchor}' class='comment #{@comment.state}' data-comment-id='#{@comment.to_param}'>
+          <div id='comment_#{@comment.anchor}' class='comment #{@comment.state}' data-comment-id='#{@comment.to_param}' data-createdat='#{@comment.created_at}'>
             <div>
               #{ avatar }
               #{ userbar }
