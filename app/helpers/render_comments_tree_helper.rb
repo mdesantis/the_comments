@@ -17,8 +17,8 @@ module RenderCommentsTreeHelper
         @options[:controller]
       end
 
-      def t str
-        controller.t str
+      def t *args
+        controller.t *args
       end
 
       # Render Helpers
@@ -66,6 +66,7 @@ module RenderCommentsTreeHelper
               #{ userbar }
               <div class='cbody'>#{ @comment.content }</div>
               #{ reply }
+              #{ edit_by_author }
             </div>
           </div>
 
@@ -85,6 +86,17 @@ module RenderCommentsTreeHelper
         anchor = h.link_to('#', '#comment_' + @comment.anchor)
         title  = @comment.title.blank? ? t('the_comments.guest_name') : @comment.title
         "<div class='userbar'>#{ title } #{ anchor }</div>"
+      end
+
+      def edit_by_author
+        if @comment.editable_by_author?
+          h.link_to t('the_comments.edit_by_author', mins_left: mins_left), h.edit_comment_url(@comment), class: :edit
+        end
+      end
+
+      def mins_left
+        diff = 4 - (Time.zone.now - @comment.created_at)/60.0
+        diff > 0 ? diff.floor : 0
       end
 
       def moderator_controls

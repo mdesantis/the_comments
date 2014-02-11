@@ -56,6 +56,19 @@ module TheComments
       mark_as_spam
     end
 
+    def editable_by_author?
+      author.present? and created_at >= 4.minutes.ago
+    end
+
+    def update_by_author(attributes)
+      if editable_by_author?
+        update_attributes(attributes)
+      else
+        errors.add :base, created_more_than_4_minutes_ago
+        false
+      end
+    end
+
     private
 
     def update_spam_counter
@@ -83,19 +96,6 @@ module TheComments
 
     def prepare_content
       self.content = self.raw_content
-    end
-
-    def editable_by_author?
-      author.present? and created_at >= 4.minutes.ago
-    end
-
-    def update_by_author(attributes)
-      if editable_by_author?
-        update_attributes(attributes)
-      else
-        errors.add :base, created_more_than_4_minutes_ago
-        false
-      end
     end
 
     def created_more_than_4_minutes_ago
