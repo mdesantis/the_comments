@@ -111,6 +111,7 @@ module TheComments
 
     def create
       @comment = @commentable.comments.new comment_params
+      @comment.user = current_user
       if @comment.valid?
         @comment.save
         return render layout: false, partial: comment_partial(:comment), locals: { tree: @comment }
