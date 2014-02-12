@@ -1,9 +1,10 @@
 module TheComments
   module User
     extend ActiveSupport::Concern
-    
+
     included do
       has_many :comcoms, class_name: :Comment, foreign_key: :holder_id
+      has_many :comments
     end
 
     def my_comments; ::Comment.where(user: self); end
