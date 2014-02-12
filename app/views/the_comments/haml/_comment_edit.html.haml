@@ -1,5 +1,5 @@
 .edit_form{ style: "display:none" }
-  = form_for comment, remote: true, html:{ role: :form } do |f|
+  = form_for comment, html:{ role: :form } do |f|
     %table.table.table-striped.table-hover
       %tr{ style: "width: 100px;"}
         %td
@@ -15,4 +15,5 @@
       %tr
         %td
         %td= f.submit t('the_comments.update'), class: "btn btn-success"
+
   %hr
