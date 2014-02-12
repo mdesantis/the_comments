@@ -13,6 +13,7 @@ end
 # Loading of concerns
 require "#{_root_}/config/routes.rb"
 require "#{_root_}/app/controllers/concerns/controller.rb"
+require "#{_root_}/app/controllers/concerns/admin_controller.rb"
 
 %w[ comment_states comment user commentable ].each do |concern|
   require "#{_root_}/app/models/concerns/#{concern}.rb"
