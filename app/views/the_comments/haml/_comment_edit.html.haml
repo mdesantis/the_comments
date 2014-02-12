@@ -10,14 +10,6 @@
           (#{comment.try(:commentable_state)})
       %tr
         %td
-          %b= t('the_comments.title')
-        %td= f.text_field :title, class: "form-control"
-      %tr
-        %td
-          %b= t('the_comments.contacts')
-        %td= f.text_field :contacts, class: "form-control"
-      %tr
-        %td
           %b= t('the_comments.content')
         %td= f.text_area  :raw_content, class: "form-control", rows: 7
       %tr
