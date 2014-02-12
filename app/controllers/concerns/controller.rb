@@ -20,10 +20,6 @@ module TheComments
     end
   end
 
-  # Base functionality of Comments Controller
-  # class CommentsController < ApplicationController
-  #   include TheComments::Controller
-  # end
   module Controller
     extend ActiveSupport::Concern
 
@@ -65,57 +61,13 @@ module TheComments
       render comment_template(:my_comments)
     end
 
-    def edit
-      @comments = current_user.comcoms.where(id: params[:id]).page(params[:page])
-      render comment_template(:manage)
-    end
-
-    def edit_by_author
+    def update_by_author
       @comment = current_user.comments.find(params[:id])
       if @comment.update_by_author(params[:comment])
         render layout: false, partial: comment_partial(:comment_body), locals: { comment: @comment }
       else
         render json: { errors: @comment.errors.full_messages }
       end
-    end
-
-    # Methods based on *current_user* helper
-    # Methods for admin
-    %w[draft published deleted].each do |state|
-      define_method "#{state}" do
-        @comments = current_user.comcoms.with_state(state).recent.page(params[:page])
-        render comment_template(:manage)
-      end
-
-      define_method "total_#{state}" do
-        @comments = ::Comment.with_state(state).recent.page(params[:page])
-        render comment_template(:manage)
-      end
-
-      unless state == 'deleted'
-        define_method "my_#{state}" do
-          @comments = current_user.my_comments.with_state(state).recent.page(params[:page])
-          render comment_template(:my_comments)
-        end
-      end
-    end
-
-    def spam
-      @comments = current_user.comcoms.where(spam: true).recent.page(params[:page])
-      render comment_template(:manage)
-    end
-
-    def total_spam
-      @comments = ::Comment.where(spam: true).recent.page(params[:page])
-      render comment_template(:manage)
-    end
-
-    # BASE METHODS
-    # Public methods
-    def update
-      @comment = ::Comment.find(params[:id])
-      @comment.update_attributes!(patch_comment_params)
-      render(layout: false, partial: comment_partial(:comment_body), locals: { comment: @comment })
     end
 
     def create
@@ -126,21 +78,6 @@ module TheComments
         return render layout: false, partial: comment_partial(:comment), locals: { tree: @comment }
       end
       render json: { errors: @comment.errors.full_messages }
-    end
-
-    # Restricted area
-    %w[draft published deleted].each do |state|
-      define_method "to_#{state}" do
-        ::Comment.find(params[:id]).try "to_#{state}"
-        render nothing: true
-      end
-    end
-
-    def to_spam
-      comment = ::Comment.find(params[:id])
-      comment.to_spam
-      comment.to_deleted
-      render nothing: true
     end
 
     private

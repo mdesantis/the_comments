@@ -21,7 +21,7 @@ module TheComments
     end
 
     # Methods for admin
-    %w[draft published deleted].each do |state|
+    %w[published deleted].each do |state|
       define_method "total_#{state}" do
         @comments = ::Comment.with_state(state).recent.page(params[:page])
         render comment_template(:manage)

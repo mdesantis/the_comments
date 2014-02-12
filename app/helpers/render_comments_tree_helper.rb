@@ -84,7 +84,7 @@ module RenderCommentsTreeHelper
 
       def userbar
         anchor = h.link_to('#', '#comment_' + @comment.anchor)
-        title  = @comment.title.blank? ? t('the_comments.guest_name') : @comment.title
+        title  = @comment.author.username
         "<div class='userbar'>#{ title } #{ anchor }</div>"
       end
 
