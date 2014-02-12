@@ -96,7 +96,7 @@ module RenderCommentsTreeHelper
 
       def mins_left
         diff = 4 - (Time.zone.now - @comment.created_at)/60.0
-        diff > 0 ? diff.floor : 0
+        diff > 0 ? diff.ceil : 0
       end
 
       def moderator_controls

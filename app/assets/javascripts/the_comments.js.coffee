@@ -62,7 +62,8 @@ $ ->
     $('input[type=submit]', form).show()
 
     if typeof(response) is 'string'
-      anchor = $(response).find('.comment').attr('id')
+      response = $(response)
+      anchor   = response.find('.comment').attr('id')
       clear_comment_form()
       form.hide()
       $('.parent_id').val('')
@@ -70,6 +71,7 @@ $ ->
       tree = form.parent().siblings('.nested_set')
       tree = $('ol.comments_tree') if tree.length is 0
       tree.append(response)
+      new Comment(response)
       document.location.hash = anchor
     else
       error_msgs = comments_errors_builder(response.errors)
@@ -86,7 +88,7 @@ $ ->
   $(document).on 'click', '.reply_link', ->
     link    = $ @
     comment = link.parent().parent().parent()
-  
+
     $(comment_forms).hide()
     form = $('#new_comment').clone().removeAttr('id').addClass('reply_comments_form')
 
