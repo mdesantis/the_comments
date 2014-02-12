@@ -16,10 +16,9 @@ module TheComments
   class AdminRoutes
     def call mapper, options = {}
       mapper.collection do
-        # mapper.get :total_draft
-        # mapper.get :total_published
-        # mapper.get :total_deleted
-        # mapper.get :total_spam
+        mapper.get :total_published
+        mapper.get :total_deleted
+        mapper.get :total_spam
       end
     end
   end
