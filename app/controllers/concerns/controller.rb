@@ -45,24 +45,14 @@ module TheComments
       before_action -> { return render(json: { errors: @errors }) unless @errors.blank? }, only: [:create]
     end
 
-    # App side methods (you can overwrite them)
-    def index
-      @comments = ::Comment.with_state(:published).recent.page(params[:page])
-      render comment_template(:index)
-    end
+    # TODO integrare nel profilo utente
+    # def my_comments
+    #   @comments = current_user.my_comments.active.recent.page(params[:page])
+    #   render comment_template(:my_comments)
+    # end
 
-    def manage
-      @comments = current_user.comcoms.active.recent.page(params[:page])
-      render comment_template(:manage)
-    end
-
-    def my_comments
-      @comments = current_user.my_comments.active.recent.page(params[:page])
-      render comment_template(:my_comments)
-    end
-
-    def update_by_author
-      @comment = current_user.comments.find(params[:id])
+    def update
+      find_comment
       if @comment.update_by_author(params[:comment])
         render layout: false, partial: comment_partial(:comment_body), locals: { comment: @comment }
       else
@@ -70,14 +60,21 @@ module TheComments
       end
     end
 
+    # via ajax, to render the form
+    def edit
+      find_comment
+      render partial: comment_partial(:comment_edit), locals: { comment: @comment }
+    end
+
     def create
       @comment = @commentable.comments.new comment_params
       @comment.user = current_user
       if @comment.valid?
         @comment.save
-        return render layout: false, partial: comment_partial(:comment), locals: { tree: @comment }
+        render layout: false, partial: comment_partial(:comment), locals: { tree: @comment }
+      else
+        render json: { errors: @comment.errors.full_messages }
       end
-      render json: { errors: @comment.errors.full_messages }
     end
 
     private
@@ -158,6 +155,10 @@ module TheComments
         tdiff   = min_time - this_time
         @errors << [t('the_comments.tolerance_time'), t('the_comments.tolerance_time_message', time: tdiff )].join(': ')
       end
+    end
+
+    def find_comment
+      @comment = current_user.comments.find(params[:id])
     end
   end
 end
