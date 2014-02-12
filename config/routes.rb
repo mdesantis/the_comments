@@ -2,23 +2,13 @@ module TheComments
   class UserRoutes
     def call mapper, options = {}
       mapper.collection do
-        mapper.get :manage
-
-        mapper.get :my_draft
-        mapper.get :my_published
-        mapper.get :my_comments
-
-        mapper.get :draft
-        mapper.get :published
-        mapper.get :deleted
-        mapper.get :spam
+        mapper.post :create
       end
 
       mapper.member do
-        mapper.post   :to_spam
-        mapper.post   :to_draft
-        mapper.post   :to_published
-        mapper.delete :to_deleted
+        mapper.get   :edit
+        mapper.patch :update
+        mapper.put   :update
       end
     end
   end
@@ -26,10 +16,10 @@ module TheComments
   class AdminRoutes
     def call mapper, options = {}
       mapper.collection do
-        mapper.get :total_draft
-        mapper.get :total_published
-        mapper.get :total_deleted
-        mapper.get :total_spam
+        # mapper.get :total_draft
+        # mapper.get :total_published
+        # mapper.get :total_deleted
+        # mapper.get :total_spam
       end
     end
   end
