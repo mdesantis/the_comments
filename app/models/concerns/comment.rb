@@ -33,11 +33,7 @@ module TheComments
     end
 
     def avatar_url
-      src = id.to_s
-      src = title unless title.blank?
-      src = contacts if !contacts.blank? && /@/ =~ contacts
-      hash = Digest::MD5.hexdigest(src)
-      "https://2.gravatar.com/avatar/#{hash}?s=42&d=https://identicons.github.com/#{hash}.png"
+      "https://1.gravatar.com/avatar/9538e63be1a8261e6c0e028db161a366?d=https%3A%2F%2Fidenticons.github.com%2F70ce772b68ee3ac16ed71bca7824c27e.png&r=x&s=440"
     end
 
     def mark_as_spam
@@ -85,7 +81,8 @@ module TheComments
     end
 
     def define_default_state
-      self.state = TheComments.config.default_owner_state if user && user == holder
+      # self.state = TheComments.config.default_owner_state if user && user == holder
+      self.state = 'published'
     end
 
     def denormalize_commentable
