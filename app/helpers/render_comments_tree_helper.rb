@@ -70,7 +70,7 @@ module RenderCommentsTreeHelper
       end
 
       def edit_by_author
-        if @comment.editable_by_author?
+        if @comment.editable_by_author? and comment_author_is_current_user?
           h.link_to t('the_comments.edit_by_author', secs: seconds_left).html_safe, h.edit_comment_url(@comment), class: :edit
         end
       end
