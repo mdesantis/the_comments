@@ -71,7 +71,7 @@ $ ->
       tree = form.parent().siblings('.nested_set')
       tree = $('ol.comments_tree') if tree.length is 0
       tree.append(response)
-      new Comment(response)
+      new Comment(response.children().first())
       document.location.hash = anchor
     else
       error_msgs = comments_errors_builder(response.errors)
