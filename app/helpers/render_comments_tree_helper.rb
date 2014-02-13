@@ -32,30 +32,10 @@ module RenderCommentsTreeHelper
 
       # Render Methods
       def render_node(h, options)
-        @h, @options = h, options
-        @comment     = options[:node]
-
+        @h, @options     = h, options
+        @comment         = options[:node]
         @max_reply_depth = options[:max_reply_depth] || TheComments.config.max_reply_depth
-
-        if @comment.draft?
-          draft_comment
-        else @comment.published?
-          published_comment
-        end
-      end
-
-      def draft_comment
-        if visible_draft? || moderator?
-          published_comment
-        else
-          "<li class='draft'>
-            <div class='comment draft' id='comment_#{@comment.anchor}'>
-              #{ t('the_comments.waiting_for_moderation') }
-              #{ h.link_to '#', '#comment_' + @comment.anchor }
-            </div>
-            #{ children }
-          </li>"
-        end
+        published_comment
       end
 
       def published_comment
@@ -67,6 +47,7 @@ module RenderCommentsTreeHelper
               <div class='cbody'>#{ @comment.content }</div>
               #{ reply }
               #{ edit_by_author }
+              #{ request_delete }
             </div>
           </div>
 
@@ -83,14 +64,14 @@ module RenderCommentsTreeHelper
       end
 
       def userbar
-        anchor = h.link_to('#', '#comment_' + @comment.anchor)
+        anchor = h.link_to('#', "#comment_#{@comment.anchor}")
         title  = @comment.author.username
         "<div class='userbar'>#{ title } #{ anchor }</div>"
       end
 
       def edit_by_author
         if @comment.editable_by_author?
-          h.link_to t('the_comments.edit_by_author', mins_left: mins_left), h.edit_comment_url(@comment), class: :edit
+          h.link_to t('the_comments.edit_by_author').html_safe, h.edit_comment_url(@comment), class: :edit
         end
       end
 
@@ -106,7 +87,7 @@ module RenderCommentsTreeHelper
       end
 
       def reply
-        if @comment.depth < (@max_reply_depth - 1)
+        if @comment.depth < (@max_reply_depth - 1) && !comment_author_is_current_user?
           "<p class='reply'><a href='#' class='reply_link'>#{ t('the_comments.reply') }</a>"
         end
       end
@@ -117,6 +98,22 @@ module RenderCommentsTreeHelper
 
       def children
         "<ol class='nested_set'>#{ options[:children] }</ol>"
+      end
+
+      def request_delete
+        if comment_author_is_current_user? and !@comment.delete_requested?
+          h.content_tag :span do
+            h.link_to t('the_comments.delete_request'), h.delete_request_comment_path(@comment), class: 'delete_request'
+          end
+        end
+      end
+
+      def comment_author_is_current_user?
+        current_user && current_user == @comment.author
+      end
+
+      def current_user
+        controller.current_user
       end
     end
   end
