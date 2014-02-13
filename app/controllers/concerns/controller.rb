@@ -60,6 +60,15 @@ module TheComments
       end
     end
 
+    def delete_request
+      find_comment
+      if @comment.to_delete_requested
+        head :ok
+      else
+        render json: { errors: @comment.errors.full_messages }
+      end
+    end
+
     # via ajax, to render the form
     def edit
       find_comment
