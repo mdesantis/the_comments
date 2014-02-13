@@ -11,8 +11,9 @@ module TheComments
           transition all - :draft => :draft
         end
 
-        event :to_delete_requested
+        event :to_delete_requested do
           transition all - :deleted_requested => :delete_requested
+        end
 
         event :to_published do
           transition all - :published => :published

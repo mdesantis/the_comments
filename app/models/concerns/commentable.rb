@@ -28,7 +28,7 @@ module TheComments
 
     def recalculate_comments_counters!
       update_attributes!({
-        draft_comments_count:     comments.with_state(:draft).count,
+        delete_requested_count:   comments.with_state(:draft).count,
         published_comments_count: comments.with_state(:published).count,
         deleted_comments_count:   comments.with_state(:deleted).count
       })
@@ -44,7 +44,7 @@ module TheComments
     def denormalization_fields_changed?
       b = @trackable_commentable_state != commentable_state
       c = @trackable_commentable_url   != commentable_url
-      a || b || c
+      b || c
     end
 
     def denormalize_for_comments
