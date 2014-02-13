@@ -9,6 +9,8 @@ module TheComments
         mapper.get   :edit
         mapper.patch :update
         mapper.put   :update
+        mapper.put   :delete_request
+        mapper.patch :delete_request
       end
     end
   end
