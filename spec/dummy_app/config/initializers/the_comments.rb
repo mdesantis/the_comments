@@ -6,7 +6,6 @@ TheComments.configure do |config|
   config.default_state       = :draft              # default state for comment
   config.default_owner_state = :published          # default state for comment for Moderator
   config.empty_inputs        = [:commentBody]      # array of spam trap fields
-  config.default_title       = 'Undefined title'   # default commentable_title for denormalization
   config.template_engine     = :haml
 
   config.empty_trap_protection     = true

@@ -97,7 +97,7 @@ Will create:
 * config/initializers/the_comments.rb
 * app/controllers/comments_controller.rb
 * app/models/comment.rb
- 
+
 :warning: &nbsp; **Open each file and follow an instructions**
 
 ### 4. Models modifictions
@@ -132,11 +132,6 @@ class Post < ActiveRecord::Base
 
   belongs_to :user
 
-  # Denormalization methods
-  # Please, read about advanced using
-  def commentable_title
-    "Undefined Post Title"
-  end
 
   def commentable_url
     "#"

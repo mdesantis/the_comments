@@ -10,7 +10,6 @@ My practice shows - We need 3 denormalized fields into comment for (request-free
 
 <img src="https://raw.github.com/the-teacher/the_comments/master/docs/the_comments_view_5.gif" alt="the_comments">
 
-* **Comment#commentable_title** - for example: "My first post about Ruby On Rails"
 * **Comment#commentable_url** - for example: "/posts/1-my-first-post-about-ruby-on-rails"
 * **Comment#commentable_state** - for example: "draft"
 
@@ -34,7 +33,5 @@ View:
 ```ruby
 - @comments.each do |comment|
   %div
-    %p= comment.commentable_title
-    %p= link_to comment.commentable_title, comment.commentable_url
     %p= comment.content
 ```

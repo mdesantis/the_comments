@@ -142,7 +142,7 @@ describe User do
   context "Written by me counters" do
     after(:all) { destroy_all }
     before(:all){ create_users_and_post }
-    it 'should has correct My counters values' do 
+    it 'should has correct My counters values' do
       @comment = Comment.create!(
         user: @user,
         commentable: @post,
@@ -160,14 +160,6 @@ describe User do
     after(:all) { destroy_all }
     before(:all) do
       base_test_situation
-    end
-
-    it 'should have denormalized fields' do
-      title = "New Title!"
-      @post.update_attribute(:title, title)
-      @post.title.should eq title
-      @comment = @post.comments.first
-      @comment.commentable_title.should eq title
     end
   end
 
@@ -280,7 +272,7 @@ describe User do
 
       my_comments_count_assert @post_holder, 0
       comments_count_assert    @post_holder, [0,0,0]
-      
+
       comcoms_count_assert    @post_holder, [0,9,0]
       comcoms_counters_assert @post_holder, [0,9,0]
 
@@ -304,7 +296,7 @@ describe User do
 
       my_comments_count_assert @post_holder, 0
       comments_count_assert    @post_holder, [0,0,0]
-      
+
       comcoms_count_assert    @post_holder, [0,5,4]
       comcoms_counters_assert @post_holder, [0,5,4]
 
@@ -332,7 +324,7 @@ describe User do
     #   end
     # end
 
-    # it 'has correct counters after comment destroy' do 
+    # it 'has correct counters after comment destroy' do
     #   pending("has correct counters after comment destroy")
     # end
   end

@@ -11,6 +11,9 @@ module TheComments
           transition all - :draft => :draft
         end
 
+        event :to_delete_requested
+          transition all - :deleted_requested => :delete_requested
+
         event :to_published do
           transition all - :published => :published
         end
@@ -46,7 +49,7 @@ module TheComments
         end
 
         # to deleted (cascade like query)
-        after_transition [:draft, :published] => :deleted do |comment|
+        after_transition [:draft, :published, :delete_requested] => :deleted do |comment|
           ids = comment.self_and_descendants.map(&:id)
           ::Comment.where(id: ids).update_all(state: :deleted)
 

@@ -19,7 +19,6 @@ ActiveRecord::Schema.define(version: 20131027185334) do
     t.integer  "commentable_id"
     t.string   "commentable_type"
     t.string   "commentable_url"
-    t.string   "commentable_title"
     t.string   "commentable_state"
     t.string   "anchor"
     t.string   "title"

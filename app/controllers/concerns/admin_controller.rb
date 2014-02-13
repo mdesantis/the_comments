@@ -64,9 +64,7 @@ module TheComments
     end
 
     def denormalized_fields
-      title = @commentable.commentable_title
-      url   = @commentable.commentable_url
-      @commentable ? { commentable_title: title, commentable_url: url } : {}
+      @commentable ? { commentable_url: @commentable.commentable_url } : {}
     end
 
     def request_data_for_comment

@@ -85,7 +85,6 @@ module TheComments
     end
 
     def denormalize_commentable
-      self.commentable_title = commentable.try :commentable_title
       self.commentable_state = commentable.try :commentable_state
       self.commentable_url   = commentable.try :commentable_url
     end

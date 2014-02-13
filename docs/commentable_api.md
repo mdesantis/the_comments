@@ -8,10 +8,6 @@ class Post < ActiveRecord::Base
 
   belongs_to :user
 
-  def commentable_title
-    try(:title) || "Undefined title" 
-  end
-
   def commentable_url
     ['', self.class.to_s.tableize, id].join('/')
   end
@@ -53,7 +49,6 @@ end
 
 # Default Denormalization methods
 # should be redefined by developer
-@post.commentable_title   => "Maiores eos rerum numquam aut."
 @post.commentable_url     => "/posts/9"
 @post.commentable_state   => "published"
 ```

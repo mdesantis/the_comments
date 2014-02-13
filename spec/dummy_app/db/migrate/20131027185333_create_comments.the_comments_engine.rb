@@ -5,19 +5,18 @@ class CreateComments < ActiveRecord::Migration
       # relations
       t.integer :user_id
       t.integer :holder_id
-      
+
       # polymorphic, commentable object
       t.integer :commentable_id
       t.string  :commentable_type
 
       # denormalization
       t.string  :commentable_url
-      t.string  :commentable_title
       t.string  :commentable_state
 
       # comment
       t.string :anchor
-      
+
       t.string :title
       t.string :contacts
 

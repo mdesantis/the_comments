@@ -70,7 +70,7 @@ Will create:
 * config/initializers/the_comments.rb
 * app/controllers/comments_controller.rb
 * app/models/comment.rb
- 
+
 :warning: &nbsp; **Open each file and follow an instructions**
 
 ### 4. Models modifictions
@@ -110,9 +110,6 @@ class Post < ActiveRecord::Base
   # Denormalization methods
   # Migration: t.string :title
   # => "My new awesome post"
-  def commentable_title
-    try(:title) || "Undefined post title"
-  end
 
   # => your way to build URL
   # => "/posts/254"

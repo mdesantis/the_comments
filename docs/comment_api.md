@@ -24,13 +24,12 @@
 @comment.content
 
 # Denormalization fields
-@comment.commentable_title  # => "Harum sint error odit."
 @comment.commentable_url    # => "/posts/7"
 @comment.commentable_state  # => "published"
 
 # Stat info from request
 # Can be used for spam detection
-@comment.user_agent       # => Opera/9.80 (Windows NT 5.1; U; en) Presto/2.2.15 Version/10.10 
+@comment.user_agent       # => Opera/9.80 (Windows NT 5.1; U; en) Presto/2.2.15 Version/10.10
 @comment.tolerance_time   # => 5 (secs)
 @comment.referer          # => localhost:3000/post/7
 @comment.ip               # => 192.168.0.12
@@ -50,7 +49,7 @@
 
 # Comment's creator avatar
 # this method can be redefined by developer
-@comment.avatar_url # => "https://2.gravatar.com/avatar/015e ... 2f05?s=42&d=https://identicons.github.com/AVATAR.png" 
+@comment.avatar_url # => "https://2.gravatar.com/avatar/015e ... 2f05?s=42&d=https://identicons.github.com/AVATAR.png"
 
 # Anchor of comment
 # this method can be redefined by developer
