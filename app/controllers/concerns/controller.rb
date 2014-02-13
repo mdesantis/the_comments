@@ -63,9 +63,9 @@ module TheComments
     def delete_request
       find_comment
       if @comment.to_delete_requested
-        head :ok
+        render text: I18n.t('the_comments.delete_request_accepted')
       else
-        render json: { errors: @comment.errors.full_messages }
+        render text: I18n.t('the_comments.delete_request_refused')
       end
     end
 
