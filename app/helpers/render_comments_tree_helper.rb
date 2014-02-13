@@ -40,7 +40,7 @@ module RenderCommentsTreeHelper
 
       def published_comment
         "<li>
-          <div id='comment_#{@comment.anchor}' class='comment #{@comment.state}' data-comment-id='#{@comment.to_param}' data-createdat='#{@comment.created_at}'>
+          <div id='comment_#{@comment.anchor}' class='comment #{@comment.state}' data-comment-id='#{@comment.to_param}' data-secs='#{seconds_left}'>
             <div>
               #{ avatar }
               #{ userbar }
