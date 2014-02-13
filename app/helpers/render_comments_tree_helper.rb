@@ -71,13 +71,13 @@ module RenderCommentsTreeHelper
 
       def edit_by_author
         if @comment.editable_by_author?
-          h.link_to t('the_comments.edit_by_author').html_safe, h.edit_comment_url(@comment), class: :edit
+          h.link_to t('the_comments.edit_by_author', secs: seconds_left).html_safe, h.edit_comment_url(@comment), class: :edit
         end
       end
 
-      def mins_left
-        diff = 4 - (Time.zone.now - @comment.created_at)/60.0
-        diff > 0 ? diff.ceil : 0
+      def seconds_left
+        diff = 4*60 - (Time.zone.now - @comment.created_at)
+        diff > 0 ? diff.to_i : 0
       end
 
       def moderator_controls
