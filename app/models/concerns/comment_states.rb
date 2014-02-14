@@ -3,12 +3,15 @@ module TheComments
     extend ActiveSupport::Concern
 
     included do
-      # :draft | :published | :deleted
+      # :draft | :published | :deleted | :delete_requested | :flagged
       state_machine :state, :initial => TheComments.config.default_state do
-
         # events
         event :to_draft do
           transition all - :draft => :draft
+        end
+
+        event :to_flagged do
+          transition all - :flagged => :flagged
         end
 
         event :to_delete_requested do
@@ -50,10 +53,9 @@ module TheComments
         end
 
         # to deleted (cascade like query)
-        after_transition [:draft, :published, :delete_requested] => :deleted do |comment|
+        after_transition [:draft, :published, :delete_requested, :flagged] => :deleted do |comment|
           ids = comment.self_and_descendants.map(&:id)
           ::Comment.where(id: ids).update_all(state: :deleted)
-
           @owner.try       :recalculate_my_comments_counter!
           @holder.try      :recalculate_comcoms_counters!
           @commentable.try :recalculate_comments_counters!

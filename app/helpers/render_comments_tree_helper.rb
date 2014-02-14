@@ -48,12 +48,19 @@ module RenderCommentsTreeHelper
               #{ reply }
               #{ edit_by_author }
               #{ request_delete }
+              #{ flag }
             </div>
           </div>
 
           <div class='form_holder'></div>
           #{ children }
         </li>"
+      end
+
+      def flag
+        h.content_tag :span, class: 'flag' do
+          h.link_to_modal t('the_comments.flag'), h.new_comment_comment_flag_path(@comment)
+        end
       end
 
       def avatar

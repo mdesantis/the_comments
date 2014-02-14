@@ -3,8 +3,10 @@ module TheComments
     extend ActiveSupport::Concern
 
     included do
-      scope :active, -> { with_state [:draft, :published] }
-      scope :recent, -> { order('created_at DESC') }
+      has_many :flags, class_name: 'CommentFlag'
+
+      scope :active,  -> { with_state [:draft, :published] }
+      scope :recent,  -> { order('created_at DESC') }
 
       # Nested Set
       acts_as_nested_set scope: [:commentable_type, :commentable_id]
@@ -16,6 +18,7 @@ module TheComments
       include TheSortableTree::Scopes
 
       validates :raw_content, presence: true
+      validates :user, :commentable, presence: true
 
       # relations
       belongs_to :user
