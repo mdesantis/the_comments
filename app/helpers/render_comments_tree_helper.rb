@@ -58,8 +58,10 @@ module RenderCommentsTreeHelper
       end
 
       def flag
-        h.content_tag :span, class: 'flag' do
-          h.link_to_modal t('the_comments.flag'), h.new_comment_comment_flag_path(@comment)
+        unless comment_author_is_current_user?
+          h.content_tag :span, class: 'flag' do
+            h.link_to_modal t('the_comments.flag'), h.new_comment_comment_flag_path(@comment), data: {flag_modal: @comment.id}
+          end
         end
       end
 
