@@ -44,7 +44,7 @@ module RenderCommentsTreeHelper
             <div>
               #{ avatar }
               #{ userbar }
-              <div class='cbody'>#{ @comment.content }</div>
+              <div class='cbody'>#{ @comment.content_html }</div>
               #{ reply }
               #{ edit_by_author }
               #{ request_delete }
