@@ -96,7 +96,7 @@ module RenderCommentsTreeHelper
       end
 
       def reply
-        if @comment.depth < (@max_reply_depth - 1) && !comment_author_is_current_user?
+        if @comment.depth < (@max_reply_depth - 1) && current_user && !comment_author_is_current_user?
           "<p class='reply'><a href='#' class='reply_link'>#{ t('the_comments.reply') }</a>"
         end
       end
@@ -110,11 +110,15 @@ module RenderCommentsTreeHelper
       end
 
       def request_delete
-        if comment_author_is_current_user? and !@comment.delete_requested?
+        if comment_author_is_current_user? and !@comment.delete_requested? and !comment_author_is_admin?
           h.content_tag :span do
             h.link_to t('the_comments.delete_request'), h.delete_request_comment_path(@comment), class: 'delete_request'
           end
         end
+      end
+
+      def comment_author_is_admin?
+        current_user and current_user.admin?
       end
 
       def comment_author_is_current_user?
