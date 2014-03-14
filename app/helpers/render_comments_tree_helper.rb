@@ -52,7 +52,6 @@ module RenderCommentsTreeHelper
               #{ flag }
             </div>
           </div>
-
           <div class='form_holder'></div>
           #{ children }
         </li>"
@@ -76,7 +75,7 @@ module RenderCommentsTreeHelper
       def userbar
         anchor = h.link_to('#', "#comment_#{@comment.anchor}")
         title  = @comment.author.username
-        "<div class='userbar'>#{ title } #{ anchor }</div>"
+        "<div class='userbar'>#{title} #{anchor}</div>"
       end
 
       def edit_by_author
@@ -123,7 +122,7 @@ module RenderCommentsTreeHelper
       end
 
       def comment_author_is_current_user?
-        current_user && current_user == @comment.author
+        current_user and current_user == @comment.author
       end
 
       def current_user
