@@ -38,24 +38,24 @@ module RenderCommentsTreeHelper
         published_comment
       end
 
-      def published_comment
-        "<li>
-          <a name='#{@comment.anchor}'></a>
-          <div id='comment_#{@comment.anchor}' class='comment #{@comment.state}' data-comment-id='#{@comment.to_param}' data-secs='#{seconds_left}'>
-            <div>
-              #{ avatar }
-              #{ userbar }
-              <div class='cbody'>#{ @comment.content_html }</div>
-              #{ reply }
-              #{ edit_by_author }
-              #{ request_delete }
-              #{ flag }
-            </div>
-          </div>
-          <div class='form_holder'></div>
-          #{ children }
-        </li>"
-      end
+      # def published_comment
+      #   "<li>
+      #     <a name='#{@comment.anchor}'></a>
+      #     <div id='comment_#{@comment.anchor}' class='comment #{@comment.state}' data-comment-id='#{@comment.to_param}' data-secs='#{seconds_left}'>
+      #       <div>
+      #         #{ avatar }
+      #         #{ userbar }
+      #         <div class='cbody'>#{ @comment.content_html }</div>
+      #         #{ reply }
+      #         #{ edit_by_author }
+      #         #{ request_delete }
+      #         #{ flag }
+      #       </div>
+      #     </div>
+      #     <div class='form_holder'></div>
+      #     #{ children }
+      #   </li>"
+      # end
 
       def flag
         unless comment_author_is_current_user?
