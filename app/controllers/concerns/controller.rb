@@ -51,15 +51,6 @@ module TheComments
     #   render comment_template(:my_comments)
     # end
 
-    def update
-      find_comment
-      if @comment.update_by_author(comment_params)
-        head :ok
-      else
-        render json: { errors: @comment.errors.full_messages }
-      end
-    end
-
     def delete_request
       find_comment
       if @comment.to_delete_requested
