@@ -23,7 +23,7 @@ module TheComments
       # relations
       belongs_to :user
       belongs_to :holder, class_name: :User
-      belongs_to :commentable, polymorphic: true
+      belongs_to :commentable, polymorphic: true, counter_cache: true
 
       # callbacks
       before_create :define_holder, :define_default_state, :define_anchor, :denormalize_commentable
