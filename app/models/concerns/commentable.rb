@@ -4,7 +4,7 @@ module TheComments
     extend ActiveSupport::Concern
 
     included do
-      has_many :comments, as: :commentable
+      has_many :comments, as: :commentable, dependent: :destroy
 
       # *define_denormalize_flags* - should be placed before title or url builder filters
       before_validation :define_denormalize_flags
