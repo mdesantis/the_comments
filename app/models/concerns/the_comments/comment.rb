@@ -15,7 +15,7 @@ module TheComments
       include TheComments::CommentStates
 
       # TheSortableTree
-      include TheSortableTree::Scopes
+      include TheComments::TheSortableTreeScopesUsingLambda
 
       validates :raw_content, presence: true
       validates :user, :commentable, presence: true
